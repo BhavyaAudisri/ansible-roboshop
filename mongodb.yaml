@@ -2,13 +2,14 @@
   hosts: mongoDB
   become: yes
   tasks:
-  - name: Install mongo db server
-    ansible.builtin.command: dnf install mongodb-org -y 
- 
   - name: Setup mongoDB repo file
     ansible.builtin.copy:
       src: mongo.repo
       dest: /etc/yum.repos.d/mongo.repo
+
+  - name: Install mongo db server
+    ansible.builtin.command: dnf install mongodb-org -y 
+ 
 
   - name: daemon reload and restart service
     ansible.builtin.systemd_service:
