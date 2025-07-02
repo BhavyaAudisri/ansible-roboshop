@@ -2,17 +2,22 @@
   hosts: rabbitmq
   become: yes
   tasks:
-  - name: Install rabbitmq db server
-    ansible.builtin.command: dnf install rabbitmq-server -y 
- 
   - name: Setup mongoDB repo file
     ansible.builtin.copy:
       src: rabbitmq.repo
       dest: /etc/yum.repos.d/rabbitmq.repo
 
+  - name: Install rabbitmq db server
+    ansible.builtin.command: dnf install rabbitmq-server -y 
+ 
   - name: daemon reload and restart service
     ansible.builtin.systemd_service:
       enabled: true
       state: restarted
       daemon_reload: true
       name: rabbitmq
+      
+  - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+    ansible.builtin.user:
+      name: roboshop
+      password: roboshop123 

@@ -10,7 +10,12 @@
   - name: Install mongo db server
     ansible.builtin.command: dnf install mongodb-org -y 
  
-
+  - name: Start and enable mongod
+    ansible.builtin.systemd:
+      name: mongod
+      state: started
+      enabled: true
+      
   - name: daemon reload and restart service
     ansible.builtin.systemd_service:
       enabled: true
