@@ -1,5 +1,5 @@
 - name: configure mongoDB server
-  hosts: backend
+  hosts: mongoDB
   become: yes
   tasks:
   - name: Install mongo db server
