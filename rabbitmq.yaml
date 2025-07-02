@@ -8,7 +8,9 @@
       dest: /etc/yum.repos.d/rabbitmq.repo
 
   - name: Install rabbitmq db server
-    ansible.builtin.command: dnf install rabbitmq-server -y 
+    ansible.builtin.dnf:
+      name: rabbitmq-server
+      state: installed
   
   - name: Start and enable rabbitmq
     ansible.builtin.systemd:
@@ -16,8 +18,14 @@
       state: started
       enabled: true
 
-
-  - name: Add the user roboshop 
-    ansible.builtin.user:
-      name: roboshop
-      password: roboshop123 
+    
+  - name: create rabbitmq user
+    community.rabbitmq.rabbitmq_user:
+      user: roboshop
+      password: roboshop123
+      permissions:
+        - vhost: /
+          configure_priv: .*
+          read_priv: .*
+          write_priv: .*
+      state: present
