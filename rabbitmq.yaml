@@ -9,15 +9,15 @@
 
   - name: Install rabbitmq db server
     ansible.builtin.command: dnf install rabbitmq-server -y 
- 
-  - name: daemon reload and restart service
-    ansible.builtin.systemd_service:
+  
+  - name: Start and enable rabbitmq
+    ansible.builtin.systemd:
+      name: rabbitmq-server
+      state: started
       enabled: true
-      state: restarted
-      daemon_reload: true
-      name: rabbitmq
-      
-  - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+
+
+  - name: Add the user roboshop 
     ansible.builtin.user:
       name: roboshop
       password: roboshop123 
