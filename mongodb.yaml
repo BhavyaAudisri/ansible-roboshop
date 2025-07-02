@@ -1,0 +1,18 @@
+- name: configure mongoDB server
+  hosts: backend
+  become: yes
+  tasks:
+  - name: Install mongo db server
+    ansible.builtin.command: dnf install mongodb-org -y 
+ 
+  - name: Setup mongoDB repo file
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: daemon reload and restart service
+    ansible.builtin.systemd_service:
+      enabled: true
+      state: restarted
+      daemon_reload: true
+      name: MongoDB
