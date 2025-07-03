@@ -30,12 +30,10 @@
       dest: /app
       remote_src: yes
 
-  - name: Install dependencies
-    community.general.npm:
-      path: /app
-
   - name: Build software
     ansible.builtin.command: go mod init dispatch; go get; go build
+    args:
+      chdir: /app
 
   - name: copy dispatch service
     ansible.builtin.copy:
