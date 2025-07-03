@@ -34,9 +34,7 @@
     ansible.builtin.command: mvn clean package
 
   - name: move file
-    ansible.builtin.copy:
-      src: target/shipping-1.0.jar
-      dest: shipping.jar 
+    ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar 
 
   - name: copy shipping service
     ansible.builtin.copy:
