@@ -1,5 +1,5 @@
-- name: configure catalogue server
-  hosts: catalogue
+- name: configure dispatch server
+  hosts: dispatch
   become: yes
   tasks:
   - name: Install golang
