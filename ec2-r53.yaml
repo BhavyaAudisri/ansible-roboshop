@@ -19,8 +19,8 @@
     - payment 
     - dispatch
     - frontend
-  tasks:
 
+  tasks:
 - name: Install AWS Python libraries
   ansible.builtin.pip:
     name: "{{ item }}"
