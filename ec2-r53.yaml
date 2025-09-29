@@ -1,6 +1,6 @@
 - name: create ec2 and r53 records
   connection: local
-  hosts: localhost   # use localhost instead of local
+  hosts: localhost
   vars:
     subnet_id: subnet-0155cd65520695d4d
     sg_id: sg-06382d8940e141231
@@ -39,7 +39,7 @@
       loop: "{{ instances }}"
       register: ec2_info
       loop_control:
-        label: "{{ item }}" 
+        label: "{{ item }}"
 
     - name: print private IP addresses
       ansible.builtin.debug:
@@ -48,14 +48,6 @@
       loop_control:
         label: "{{ item.item }}"
 
-    - name: remove frontend private ip record if exists
-      amazon.aws.route53:
-        state: absent
-        zone: "{{ zone }}"
-        record: "frontend.{{ zone }}"
-        type: A
-      ignore_errors: yes
-      
     - name: create private ip r53 records
       amazon.aws.route53:
         state: present
@@ -82,6 +74,21 @@
         wait: true
         overwrite: true
       loop: "{{ ec2_info.results }}"
-      when: item.item == "frontend"
+      when: item.item | trim == "frontend"
       loop_control:
         label: "{{ item.item }}"
+
+    - name: generate dynamic inventory file
+      copy:
+        dest: "./hosts.ini"
+        content: |
+          {% for item in ec2_info.results %}
+          [{{ item.item }}]
+          {% if item.item | trim == 'frontend' %}
+          {{ item.instances[0].public_ip_address }}
+          {% else %}
+          {{ item.instances[0].private_ip_address }}
+          {% endif %}
+
+          {% endfor %}
+      delegate_to: localhost
