@@ -48,6 +48,14 @@
       loop_control:
         label: "{{ item.item }}"
 
+    - name: remove frontend private ip record if exists
+      amazon.aws.route53:
+        state: absent
+        zone: "{{ zone }}"
+        record: "frontend.{{ zone }}"
+        type: A
+      ignore_errors: yes
+      
     - name: create private ip r53 records
       amazon.aws.route53:
         state: present
