@@ -1,5 +1,5 @@
 - name: configure mongoDB server
-  hosts: mongoDB
+  hosts: mongodb
   become: yes
   tasks:
   - name: Setup mongoDB repo file
