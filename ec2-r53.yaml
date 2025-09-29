@@ -35,7 +35,7 @@
         subnet_id: "{{ subnet_id }}"
         security_group: "{{ sg_id }}"
         image_id: "{{ ami_id }}"
-        instance_type: "{{ 't3.large' if item in ['mongodb', 'catalogue'] else instance_type }}"
+        instance_type: "{{ 't3.large' if item in ['mongodb', 'catalogue', 'shipping'] else instance_type }}"
       loop: "{{ instances }}"
       register: ec2_info
       loop_control:
