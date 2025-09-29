@@ -36,15 +36,15 @@
       image_id: "{{ ami_id }}"
       instance_type: >-
         {% if item in ['mongodb', 'catalogue'] %}
-           t3.large
+        t3.large
         {% else %}
-          {{ instance_type }}
+        {{ instance_type }}
         {% endif %}
       loop: "{{ instances }}"
       register: ec2_info
       loop_control:
         label: "{{ item }}" 
-
+  
   # - name: print instance info
   #   ansible.builtin.debug:
   #     msg: "{{ ec2_info }}"   
