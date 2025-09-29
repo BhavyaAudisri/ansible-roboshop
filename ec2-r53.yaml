@@ -38,7 +38,7 @@
         {% if item in ['mongodb', 'catalogue'] %}
            t3.large
         {% else %}
-          {{ default_instance_type }}
+          {{ instance_type }}
         {% endif %}
       loop: "{{ instances }}"
       register: ec2_info
