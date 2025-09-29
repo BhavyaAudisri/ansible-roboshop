@@ -78,16 +78,16 @@
       loop_control:
         label: "{{ item.item }}"
 
-    - name: generate dynamic inventory file
+    - name: generate dynamic inventory file with R53 records
       copy:
         dest: "./hosts.ini"
         content: |
           {% for item in ec2_info.results %}
           [{{ item.item }}]
           {% if item.item | trim == 'frontend' %}
-          {{ item.instances[0].public_ip_address }}
+          {{ zone }}        # public record for frontend
           {% else %}
-          {{ item.instances[0].private_ip_address }}
+          {{ item.item }}.{{ zone }}   # private record for other services
           {% endif %}
 
           {% endfor %}
