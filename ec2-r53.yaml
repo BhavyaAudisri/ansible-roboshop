@@ -8,10 +8,10 @@
     instance_type: t3.micro
     zone: somisettibhavya.life
     instances:
-      - mysql
+      #- mysql
       - mongodb
-      - redis
-      - rabbitmq
+      #- redis
+      #- rabbitmq
       - user
       - cart
       - catalogue
