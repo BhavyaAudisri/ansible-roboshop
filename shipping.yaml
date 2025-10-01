@@ -72,7 +72,7 @@
     - import
     community.mysql.mysql_db:
       name: all
-      login_user: root
+      login_user: admin
       login_password: RoboShop@1
       login_host: mysql.somisettibhavya.life
       state: import
