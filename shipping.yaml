@@ -73,7 +73,7 @@
     community.mysql.mysql_db:
       name: all
       login_user: root
-      login_password: RoboShop@1
+      login_password: RoboShop123
       login_host: mysql.somisettibhavya.life
       state: import
       target: "{{ item }}"
